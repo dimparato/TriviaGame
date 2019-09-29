@@ -6,13 +6,61 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-11/css/all.min.css">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<iframe src="assets/audio/silence.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
 <title>Trivia Game</title>
 </head>
 <body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+<audio autoplay loop volume="1.0">
+    <source src="assets/audio/jeopardy.mp3" type="audio/mpeg">
+</audio>
+
+<div id="diffSelect" class="container-fluid">
+    <div>Trivia Game!</div>
+    <div>Please Pick Your Difficulty:</div>
+    <button id="easy">Easy</button>
+    <button id="medium">Medium</button>
+    <button id="hard">Hard</button>
+</div>
+
+<div id="answerPrompt" class="container-fluid">
+    <div class="row">
+        <div class="col" id="question"></div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="guess" id="answer1"></button><br>
+            <button class="guess" id="answer2"></button><br>
+            <button class="guess" id="answer3"></button><br>
+            <button class="guess" id="answer4"></button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="assets/javascript/game.js"></script>
+<script type="text/javascript">
+
+$("#easy").on('click', function(){
+    retrieve("easy");
+    $("#diffSelect").hide();
+    $("#answerPrompt").show();
+});
+$("#medium").on('click', function(){
+    retrieve("medium");
+    $("#diffSelect").hide();
+    $("#answerPrompt").show();
+});
+$("#hard").on('click', function(){
+    retrieve("hard");
+    $("#diffSelect").hide();
+    $("#answerPrompt").show();
+});
+
+</script>
 </body>
 </html>

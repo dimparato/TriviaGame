@@ -1,0 +1,20 @@
+html {
+  margin: auto;
+  background: blue;
+  background-image: url(../images/3px-tile.png);
+}
+
+div {
+  text-align: center;
+  color: gold;
+  font-family: 'Press Start 2P', cursive;
+  background: blue;
+  background-image: url(../images/3px-tile.png);
+}
+
+.button {
+  margin-left: 20px;
+  font-size: 25px;
+  color: black;
+  background-image: url(../images/3px-tile.png);
+}
