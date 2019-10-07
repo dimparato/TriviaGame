@@ -19,6 +19,7 @@
 
 <div id="diffSelect" class="container-fluid">
     <div>Trivia Game!</div>
+    <div>Get 10 Wrong and You Lose!</div>
     <div>Please Pick Your Difficulty:</div>
     <button id="easy">Easy</button>
     <button id="medium">Medium</button>
@@ -31,10 +32,9 @@
     </div>
     <div class="row">
         <div class="col">
-            <button class="guess" id="answer1"></button><br>
-            <button class="guess" id="answer2"></button><br>
-            <button class="guess" id="answer3"></button><br>
-            <button class="guess" id="answer4"></button>
+            <div id="guesses"></div>
+            <div id="correct"></div>
+            <div id="incorrect"></div>
         </div>
     </div>
 </div>
@@ -45,17 +45,20 @@
 <script src="assets/javascript/game.js"></script>
 <script type="text/javascript">
 
-$("#easy").on('click', function(){
+$("#easy").on('click', function() {
+    gameReset();
     retrieve("easy");
     $("#diffSelect").hide();
     $("#answerPrompt").show();
 });
-$("#medium").on('click', function(){
+$("#medium").on('click', function() {
+    gameReset();
     retrieve("medium");
     $("#diffSelect").hide();
     $("#answerPrompt").show();
 });
-$("#hard").on('click', function(){
+$("#hard").on('click', function() {
+    gameReset();
     retrieve("hard");
     $("#diffSelect").hide();
     $("#answerPrompt").show();

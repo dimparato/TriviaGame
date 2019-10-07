@@ -1,48 +1,61 @@
+var correct;
+var incorrect;
+
+function gameReset() {
+    correct = 0;
+    incorrect = 0;
+    $("#correct").empty();
+    $("#incorrect").empty();
+}
 function retrieve(level) {
-    var queryURL = "https://opentdb.com/api.php?amount=10&difficulty=" + level + "&type=multiple";
+    var queryURL = "https://opentdb.com/api.php?amount=01&difficulty=" + level + "&type=multiple";
 
     $.ajax({
         url: queryURL, method: "GET"
         }).then(function(response) {
-            answer(response);
+            processQuestion(response, level);
     });
 }
-function answer(trivia) {
-    var correct = 0;
-    var incorrect = 0;
-    var answers = [];
+function processQuestion(triviaData, level) {
+    var next = triviaData.results[0];
+    var answers = randomizeAnswers(next);
+    var question = next.question;
+    var correctAnswer = next.correct_answer;
+    answerTime(question, answers, correctAnswer, level);
+}
+function answerTime (question, answers, correctAnswer, level) {
+    $("#guesses").empty();
+    $("#question").html(question);
 
-    for (let i=0; i<10; i++)
-    {
-        setInterval (function () {
-            answers = trivia.results[i].incorrect_answers;
-            answers.push(trivia.results[i].correct_answer);
-            answers=shuffle(answers);
+        for (let i=0; i<answers.length; i++) {
+            var answerBtn = $("<button>");
+            answerBtn.addClass("guessBtn")
+            answerBtn.html(answers[i]);
+            $("#guesses").append(answerBtn);
+        }
 
-            $("#question").text(trivia.results[i].question);
-
-            $("#answer1").text(answers[0]);
-            $("#answer2").text(answers[1]);
-            $("#answer3").text(answers[2]);
-            $("#answer4").text(answers[3]);
-
-            $(".guess").on("click",function() {
-                if (this.text === trivia.results[i].correct_answer) {
-                    correct++;
-                    $("<div>").text("Right!");
-                }
-                else {
-                    incorrect++;
-                    $("<div>").text("Wrong!");
-                }
-            });
-        }, 10000);
-    }
-
-    $("<div>").text("Correct = " + correct);
-    $("<div>").text("Incorrect = " + incorrect);
-    //$("#answerPrompt").hide();
-    //$("#diffSelect").show();
+    $(".guessBtn").one("click",function(){
+        var guess = $(event.target).html();
+        if (guess === correctAnswer) {
+            correct++;
+            $("#correct").text("Correct: " + correct);
+        }
+        else {
+            incorrect++;
+            $("#incorrect").text("Incorrect: " + incorrect);
+            if (incorrect>9) {
+                $("#answerPrompt").hide();
+                $("#diffSelect").show();
+            }
+        }
+        setTimeout(retrieve(level), 10000);
+    });
+}
+function randomizeAnswers (question) {
+    var answers = question.incorrect_answers;
+    answers.push(question.correct_answer);
+    answers=shuffle(answers);
+    return answers;
 }
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
